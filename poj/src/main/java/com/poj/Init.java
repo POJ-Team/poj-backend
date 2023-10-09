@@ -12,6 +12,7 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class Init {
+//    test
     private final InitAuthority initAuthority;
 
     @PostConstruct
