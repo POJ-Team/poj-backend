@@ -58,6 +58,6 @@ public class Problem extends BaseEntity {
 
     public void addPassNum(){
         passNumber++;
-        addSubmitNum();
+        passSubmitRatio = (double)passNumber / submitNumber;
     }
 }
