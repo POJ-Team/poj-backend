@@ -35,7 +35,6 @@ public class Problem extends BaseEntity {
 
     private Long submitNumber = 0L; // 제출한 사람 수
     private Long passNumber = 0L; // 통과한 사람 수
-    private Double passSubmitRatio; // 통과 비율
 
 
     @Builder
@@ -48,11 +47,13 @@ public class Problem extends BaseEntity {
 
     public void addSubmitNum(){
         submitNumber++;
-        passSubmitRatio = (double)passNumber / submitNumber;
     }
 
     public void addPassNum(){
         passNumber++;
-        addSubmitNum();
+    }
+
+    public double getPassRatio() {
+        return (double)passNumber / submitNumber;
     }
 }
