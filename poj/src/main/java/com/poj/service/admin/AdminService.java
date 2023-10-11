@@ -2,8 +2,8 @@ package com.poj.service.admin;
 
 import com.poj.entity.member.EAuthority;
 import com.poj.entity.member.Member;
-import com.poj.repository.AuthorityRepository;
-import com.poj.repository.MemberRepository;
+import com.poj.repository.member.AuthorityRepository;
+import com.poj.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

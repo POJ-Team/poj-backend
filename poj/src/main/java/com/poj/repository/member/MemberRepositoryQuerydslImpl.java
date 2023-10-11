@@ -1,7 +1,6 @@
-package com.poj.repository;
+package com.poj.repository.member;
 
 import com.poj.entity.member.Member;
-import com.poj.entity.member.QMember;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;

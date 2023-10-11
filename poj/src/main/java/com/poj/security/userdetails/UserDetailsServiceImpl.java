@@ -1,7 +1,7 @@
 package com.poj.security.userdetails;
 
 import com.poj.entity.member.Member;
-import com.poj.repository.MemberRepository;
+import com.poj.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

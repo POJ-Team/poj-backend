@@ -1,4 +1,4 @@
-package com.poj.repository;
+package com.poj.repository.member;
 
 import com.poj.entity.member.Authority;
 import com.poj.entity.member.EAuthority;

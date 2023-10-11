@@ -1,7 +1,7 @@
 package com.poj.validation.auth;
 
 import com.poj.dto.auth.SignupRequest;
-import com.poj.repository.MemberRepository;
+import com.poj.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
