@@ -2,7 +2,7 @@ package com.poj;
 
 import com.poj.entity.member.Authority;
 import com.poj.entity.member.EAuthority;
-import com.poj.repository.AuthorityRepository;
+import com.poj.repository.member.AuthorityRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

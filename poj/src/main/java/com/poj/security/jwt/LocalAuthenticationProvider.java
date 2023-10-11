@@ -1,7 +1,7 @@
 package com.poj.security.jwt;
 
 import com.poj.entity.member.Member;
-import com.poj.repository.MemberRepository;
+import com.poj.repository.member.MemberRepository;
 import com.poj.security.userdetails.UserDetailsImpl;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
