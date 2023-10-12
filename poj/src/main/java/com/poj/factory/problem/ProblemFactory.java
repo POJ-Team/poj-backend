@@ -2,7 +2,7 @@ package com.poj.factory.problem;
 
 import com.poj.dto.problem.CreateProblemRequest;
 import com.poj.entity.problem.Problem;
-import com.poj.repository.ProblemRepository;
+import com.poj.repository.problem.ProblemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
