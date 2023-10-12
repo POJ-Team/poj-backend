@@ -1,4 +1,4 @@
-package com.poj.entity.Board;
+package com.poj.entity.board;
 
 import com.poj.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FreeBoard extends BaseEntity {
+public class NoticeBoard extends BaseEntity {
     @Id
     @GeneratedValue
-    @Column(name = "free_board_id")
+    @Column(name = "notice_board_id")
     private Long id;
 
     @NotBlank
@@ -29,7 +29,7 @@ public class FreeBoard extends BaseEntity {
     private String author;//author
 
     @Builder
-    public FreeBoard(String title, String context, String author){
+    public NoticeBoard(String title, String context, String author){
         this.title = title;
         this.context = context;
         this.author = author;
