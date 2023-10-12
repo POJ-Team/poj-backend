@@ -26,7 +26,7 @@ public class EmailVerificationService {
         redisRepository.setWithTimeout(authCodeKey, code, authCodeValidityInSeconds);
     }
 
-    public boolean validateCode(String toEmail, String code) {
+    public boolean verifyCode(String toEmail, String code) {
         String authCodeKey = getAuthCodeKey(toEmail);
         String authCode = redisRepository.get(authCodeKey);
         return authCode != null && authCode.equals(code);
