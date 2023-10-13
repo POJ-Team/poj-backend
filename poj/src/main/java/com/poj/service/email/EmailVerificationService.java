@@ -1,6 +1,8 @@
 package com.poj.service.email;
 
+import com.poj.dto.email.EmailVerifyResponse;
 import com.poj.repository.redis.RedisRepository;
+import com.poj.security.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +16,8 @@ import java.security.SecureRandom;
 public class EmailVerificationService {
     private final EmailSendService emailSendService;
     private final RedisRepository redisRepository;
+    private final JwtProvider jwtProvider;
+
     @Value("${spring.mail.auth-code-validity-in-seconds}")
     private Long authCodeValidityInSeconds;
     private static final SecureRandom secureRandom = new SecureRandom();
@@ -26,10 +30,16 @@ public class EmailVerificationService {
         redisRepository.setWithTimeout(authCodeKey, code, authCodeValidityInSeconds);
     }
 
-    public boolean verifyCode(String toEmail, String code) {
+    public EmailVerifyResponse verifyCode(String toEmail, String code) {
         String authCodeKey = getAuthCodeKey(toEmail);
         String authCode = redisRepository.get(authCodeKey);
-        return authCode != null && authCode.equals(code);
+        boolean success = authCode != null && authCode.equals(code);
+        if (success) {
+            String token = jwtProvider.createEmailVerificationToken(toEmail);
+            return new EmailVerifyResponse(true, token);
+        } else {
+            return new EmailVerifyResponse(false, null);
+        }
     }
 
     private String createCode() {

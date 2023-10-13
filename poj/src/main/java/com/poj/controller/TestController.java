@@ -1,5 +1,6 @@
 package com.poj.controller;
 
+import com.poj.dto.email.EmailVerifyResponse;
 import com.poj.service.email.EmailVerificationService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +24,10 @@ public class TestController {
     }
 
     @PostMapping("/verify-code")
-    public ResponseEntity<String> verifyCode(@RequestBody TestVerifyCodeRequest request) {
-        boolean result = emailVerificationService.verifyCode(request.getEmail(), request.getCode());
-        if (!result) {
-            return ResponseEntity.badRequest().body("인증 코드가 일치하지 않습니다.");
-        }
-        return ResponseEntity.ok("인증 코드를 성공적으로 검증하였습니다.");
+    public ResponseEntity<EmailVerifyResponse> verifyCode(@RequestBody TestVerifyCodeRequest request) {
+        EmailVerifyResponse emailVerifyResponse = emailVerificationService.verifyCode(request.getEmail(), request.getCode());
+        // 프론트의 요청에 따라 이메일 검증 절차가 실패 했을 경우 에러 status code 를 내보낼 수도 있습니다.
+        return ResponseEntity.ok(emailVerifyResponse);
     }
 
 

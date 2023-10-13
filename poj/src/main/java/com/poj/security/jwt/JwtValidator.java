@@ -56,4 +56,13 @@ public class JwtValidator {
         }
         return true;
     }
+
+    public boolean validateEmailVerificationToken(String emailVerificationToken, String email) {
+        validateToken(emailVerificationToken);
+        String tokenEmail = jwtProvider.getClaims(emailVerificationToken).get("email", String.class);
+        if (!email.equals(tokenEmail)) {
+            throw new InvalidTokenRequestException("email verification token", emailVerificationToken, "invalid email.");
+        }
+        return true;
+    }
 }
