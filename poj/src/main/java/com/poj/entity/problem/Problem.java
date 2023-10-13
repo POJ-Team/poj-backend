@@ -23,33 +23,36 @@ public class Problem extends BaseEntity {
     @Column(name = "problem_id")
     private Long id; // ID
 
-    @NotBlank
-    @Column(unique = true)
-    private Long index; // 번호.
+    @OneToOne(mappedBy = "problem", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private ProblemDetail problemDetail;
+
+//    @NotBlank
+//    @Column(unique = true)
+//    private Long index; // 번호. 생성로직 필요
 
     @NotBlank
+    @Column(unique = true)
     private String title; // 제목
 
     private Long submitNumber = 0L; // 제출한 사람 수
     private Long passNumber = 0L; // 통과한 사람 수
 
-    private EProblemDifficulty difficulty; // 난이도
-    private Set<EAvailableLanguage> availableLanguage; // 문제에서 사용 가능한 언어 리스트(리스트??)
+     private EProblemDifficulty difficulty; // 난이도
+     private Set<EAvailableLanguage> availableLanguage; // 문제에서 사용 가능한 언어 집합
 
     private Long registeredTime; // 문제를 등록한 시간
 
-    @OneToOne
-    private ProblemDetail problemDetail;
-
     @Builder
     public Problem(String title,
-                   EProblemDifficulty difficulty,
+                    EProblemDifficulty difficulty,
                    Set<EAvailableLanguage> availableLanguage,
                    ProblemDetail problemDetail) {
         this.title = title;
         this.difficulty = difficulty;
         this.availableLanguage = availableLanguage;
         this.problemDetail = problemDetail;
+
+        problemDetail.setProblem(this);
 
         registeredTime = Date.from(Instant.now()).getTime(); // 현재 시간 등록
     }
