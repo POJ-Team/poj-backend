@@ -27,6 +27,8 @@ public class JwtProvider {
     private Long accessTokenValidityInSeconds;
     @Value("${secret.refresh-token-validity-in-seconds}")
     private Long refreshTokenValidityInSeconds;
+    @Value("${secret.email-verification-validity-in-seconds}")
+    private Long emailVerificationValidityInSeconds;
     private Key key;
 
     @PostConstruct
@@ -58,6 +60,12 @@ public class JwtProvider {
         return createToken(memberDetails, validity);
     }
 
+    public String createEmailVerificationToken(String email) {
+        Date validity = getDateAfter(this.emailVerificationValidityInSeconds);
+
+        return createToken(email, validity);
+    }
+
     private Date getDateAfter(long seconds) {
         return new Date(System.currentTimeMillis() + seconds * 1000);
     }
@@ -74,4 +82,11 @@ public class JwtProvider {
                 .compact();
     }
 
+    private String createToken(String email, Date validity) {
+        return Jwts.builder()
+                .claim("email", email)
+                .signWith(key, SignatureAlgorithm.HS512)
+                .setExpiration(validity)
+                .compact();
+    }
 }
