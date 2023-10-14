@@ -3,6 +3,7 @@ package com.poj.entity.problem;
 import com.poj.entity.BaseEntity;
 
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -23,7 +24,8 @@ public class Problem extends BaseEntity {
     @Column(name = "problem_id")
     private Long id; // ID
 
-    @OneToOne(mappedBy = "problem", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "problem_detail_id")
     private ProblemDetail problemDetail;
 
 //    @NotBlank
@@ -37,10 +39,12 @@ public class Problem extends BaseEntity {
     private Long submitNumber = 0L; // 제출한 사람 수
     private Long passNumber = 0L; // 통과한 사람 수
 
-     private EProblemDifficulty difficulty; // 난이도
-     private Set<EAvailableLanguage> availableLanguage; // 문제에서 사용 가능한 언어 집합
+    @Enumerated(EnumType.STRING)
+    private EProblemDifficulty difficulty; // 난이도
 
-    private Long registeredTime; // 문제를 등록한 시간
+    @Enumerated(EnumType.STRING)
+    //    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<EAvailableLanguage> availableLanguage; // 문제에서 사용 가능한 언어 집합
 
     @Builder
     public Problem(String title,
@@ -52,9 +56,6 @@ public class Problem extends BaseEntity {
         this.availableLanguage = availableLanguage;
         this.problemDetail = problemDetail;
 
-        problemDetail.setProblem(this);
-
-        registeredTime = Date.from(Instant.now()).getTime(); // 현재 시간 등록
     }
 
     public void addSubmitNum(){
