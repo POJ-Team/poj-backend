@@ -12,10 +12,10 @@ Problem을 저장하는 JPARepository
  */
 public interface ProblemRepository extends JpaRepository<Problem, Long> {
 
-    Optional<Problem> findByTitle(String title); // problem only
+    Optional<Problem> findById(Long id); // problem only
 
     @EntityGraph(attributePaths = {"problemDetail"})
-    Optional<Problem> findWithProblemDetailByTitle(String title); // fetch join
+    Optional<Problem> findWithProblemDetailById(Long id); // fetch join
 
     // paging
     // 필요한 검색기능
