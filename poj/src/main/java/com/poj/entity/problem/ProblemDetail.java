@@ -21,10 +21,6 @@ public class ProblemDetail {
     @Column(name = "problem_detail_id")
     private Long id; // ID
 
-    @OneToOne
-    @JoinColumn(name = "problem_id")
-    private Problem problem;
-
     @NotBlank
     @Column(unique = true)
     private String info; // 문제 설명
@@ -34,10 +30,6 @@ public class ProblemDetail {
 
     private Long timeLimit; // 시간 제한(default = Long.MAX_VALUE)
     private Long memoryLimit; // 메모리 제한. 단위 = mb(default = 256mb)
-
-    protected void setProblem(Problem problem){
-        this.problem = problem;
-    }
 
     @Builder
     public ProblemDetail(String info, String inputExample, String outputExample) {
