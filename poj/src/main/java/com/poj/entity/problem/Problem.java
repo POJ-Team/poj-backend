@@ -67,6 +67,9 @@ public class Problem extends BaseEntity {
     }
 
     public double getPassRatio() {
-        return (double)passNumber / submitNumber;
+        if(submitNumber != 0)
+            return (double)passNumber / submitNumber;
+        else
+            return 0;
     }
 }
