@@ -43,7 +43,7 @@ public class Problem extends BaseEntity {
     private EProblemDifficulty difficulty; // 난이도
 
     @Enumerated(EnumType.STRING)
-    //    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<EAvailableLanguage> availableLanguage; // 문제에서 사용 가능한 언어 집합
 
     @Builder
@@ -55,7 +55,6 @@ public class Problem extends BaseEntity {
         this.difficulty = difficulty;
         this.availableLanguage = availableLanguage;
         this.problemDetail = problemDetail;
-
     }
 
     public void addSubmitNum(){
