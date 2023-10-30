@@ -1,6 +1,7 @@
 package com.poj.repository.problem;
 
 import com.poj.entity.problem.Problem;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -9,6 +10,7 @@ import java.util.Optional;
 /**
 Problem을 저장하는 JPARepository
  */
+@Primary
 public interface ProblemRepository extends JpaRepository<Problem, Long>, ProblemRepositoryQuerydsl{
 
     Optional<Problem> findById(Long id); // problem only
