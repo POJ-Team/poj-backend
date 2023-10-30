@@ -21,6 +21,4 @@ public class ProblemRequest {
 
     @Enumerated(EnumType.STRING)
     private Set<EAvailableLanguage> availableLanguage; // 문제에서 사용 가능한 언어 집합
-
-    private ProblemDetail problemDetail; // 문제의 상세 정보
 }
