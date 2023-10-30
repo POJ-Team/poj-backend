@@ -1,15 +1,14 @@
 package com.poj.entity.problem;
 
+import com.poj.dto.problem.ProblemDetailRequest;
+import com.poj.dto.problem.ProblemRequest;
 import com.poj.entity.BaseEntity;
 
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Instant;
 import java.util.Date;
@@ -57,6 +56,19 @@ public class Problem extends BaseEntity {
         this.difficulty = difficulty;
         this.availableLanguage = availableLanguage;
         this.problemDetail = problemDetail;
+    }
+
+    public void update(ProblemRequest request){
+        this.title = request.getTitle();
+        this.difficulty = request.getDifficulty();
+        this.availableLanguage = request.getAvailableLanguage();
+    }
+
+    public void updateWithDetail(ProblemRequest request_b, ProblemDetailRequest request_d){
+        this.title = request_b.getTitle();
+        this.difficulty = request_b.getDifficulty();
+        this.availableLanguage = request_b.getAvailableLanguage();
+        this.problemDetail.update(request_d);
     }
 
     public void addSubmitNum(){

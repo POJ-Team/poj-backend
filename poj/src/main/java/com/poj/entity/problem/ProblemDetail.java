@@ -1,5 +1,6 @@
 package com.poj.entity.problem;
 
+import com.poj.dto.problem.ProblemDetailRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -39,6 +40,14 @@ public class ProblemDetail {
         this.outputExample = outputExample;
         this.timeLimit = timeLimit;
         this.memoryLimit = memoryLimit;
+    }
+
+    void update (ProblemDetailRequest request){
+        this.info = request.getInfo();
+        this.inputExample = request.getInputExample();
+        this.outputExample = request.getOutputExample();
+        this.timeLimit = request.getTimeLimit();
+        this.memoryLimit = request.getMemoryLimit();
     }
 
 }
