@@ -2,6 +2,7 @@ package com.poj.entity.problem;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,22 +24,13 @@ public class ProblemDetail {
 
     @NotBlank
     @Column(unique = true)
-    private String info; // 문제 설명
+    private String info = ""; // 문제 설명
 
-    private String inputExample; // input 예시
-    private String outputExample; // output 예시
+    private String inputExample = ""; // input 예시
+    private String outputExample = ""; // output 예시
 
-    private Long timeLimit; // 시간 제한(default = Long.MAX_VALUE)
-    private Long memoryLimit; // 메모리 제한. 단위 = mb(default = 256mb)
-
-    @Builder
-    public ProblemDetail(String info, String inputExample, String outputExample) {
-        this.info = info;
-        this.inputExample = inputExample;
-        this.outputExample = outputExample;
-        this.timeLimit = Long.MAX_VALUE;
-        this.memoryLimit = 256L;;
-    }
+    private Long timeLimit = Long.MAX_VALUE; // 시간 제한(default = Long.MAX_VALUE)
+    private Long memoryLimit = 256L; // 메모리 제한. 단위 = mb(default = 256mb)
 
     @Builder
     public ProblemDetail(String info, String inputExample, String outputExample, Long timeLimit, Long memoryLimit) {
