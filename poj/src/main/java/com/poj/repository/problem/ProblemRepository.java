@@ -1,7 +1,11 @@
 package com.poj.repository.problem;
 
+import com.poj.entity.problem.EAvailableLanguage;
+import com.poj.entity.problem.EProblemDifficulty;
 import com.poj.entity.problem.Problem;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -15,7 +19,10 @@ public interface ProblemRepository extends JpaRepository<Problem, Long>, Problem
 
     Optional<Problem> findById(Long id); // problem only
 
-    // paging
-    // 필요한 검색기능
-    // 난이도, 이름, 날짜순, 통과비율
+    Page<Problem> findAllByTitleContains(String title, PageRequest pageRequest);
+
+    Page<Problem> findAllByAvailableLanguage(EAvailableLanguage availableLanguage, PageRequest pageRequest);
+
+    Page<Problem> findAllByDifficulty(EProblemDifficulty problemDifficulty, PageRequest pageRequest);
+
 }
