@@ -25,6 +25,7 @@ public class ProblemUpdateService {
         if(problemRepository.findById(ID).isPresent()){
             Problem problem = problemRepository.findById(ID).get();
             problem.update(problemRequest);
+            problemRepository.save(problem);
         }
     }
 
@@ -32,6 +33,7 @@ public class ProblemUpdateService {
         if(problemRepository.findById(ID).isPresent()){
             Problem problem = problemRepository.findById(ID).get();
             problem.updateWithDetail(problemRequest, problemDetailRequest);
+            problemRepository.save(problem);
         }
     }
 
