@@ -27,12 +27,39 @@ public class MemberFactory {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .authorities(Set.of(
-                        authorityRepository.findByName(EAuthority.ROLE_UNVERIFIED)))
+                        authorityRepository.findByEAuthority(EAuthority.ROLE_UNVERIFIED)))
                 .build();
         memberRepository.save(member);
         return member;
 
     }
 
+    public Member createUser(SignupRequest request) {
+        authValidator.signupValidate(request);
+        Member member = Member.builder()
+                .username(request.getUsername())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .authorities(Set.of(
+                        authorityRepository.findByEAuthority(EAuthority.ROLE_UNVERIFIED),
+                        authorityRepository.findByEAuthority(EAuthority.ROLE_USER)))
+                .build();
+        memberRepository.save(member);
+        return member;
+    }
 
+    public Member createAdmin(SignupRequest request) {
+        authValidator.signupValidate(request);
+        Member member = Member.builder()
+                .username(request.getUsername())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .authorities(Set.of(
+                        authorityRepository.findByEAuthority(EAuthority.ROLE_UNVERIFIED),
+                        authorityRepository.findByEAuthority(EAuthority.ROLE_USER),
+                        authorityRepository.findByEAuthority(EAuthority.ROLE_ADMIN)))
+                .build();
+        memberRepository.save(member);
+        return member;
+    }
 }
