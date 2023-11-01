@@ -15,12 +15,12 @@ public class Authority {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private EAuthority name;
+    private EAuthority eAuthority;
 
     public String getName() {
-        return name.name();
+        return eAuthority.name();
     }
-    public Authority(EAuthority name) {
-        this.name = name;
+    public Authority(EAuthority eAuthority) {
+        this.eAuthority = eAuthority;
     }
 }
