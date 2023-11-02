@@ -2,7 +2,6 @@ package com.poj.dto.problem;
 
 import com.poj.entity.problem.EAvailableLanguage;
 import com.poj.entity.problem.EProblemDifficulty;
-import com.poj.entity.problem.ProblemDetail;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
@@ -10,8 +9,11 @@ import lombok.Data;
 
 import java.util.Set;
 
+/**
+ * 문제를 생성할 때 사용하는 Request입니다.
+ */
 @Data
-public class ProblemRequest {
+public class ProblemCreateRequest {
 
     @NotBlank
     private String title; // 제목
