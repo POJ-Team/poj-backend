@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProblemDeleteService {
     private final ProblemRepository problemRepository;
-    private final ProblemRepositoryQuerydsl problemRepositoryQuerydsl;
 
     public void DeleteProblem(Long ProblemID){
         if(problemRepository.existsById(ProblemID)){
