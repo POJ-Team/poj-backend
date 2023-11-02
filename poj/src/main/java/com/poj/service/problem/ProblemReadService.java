@@ -1,10 +1,11 @@
 package com.poj.service.problem;
 
+import com.poj.dto.problem.ProblemReadRequest;
+import com.poj.dto.problem.ProblemResponse;
 import com.poj.entity.problem.EAvailableLanguage;
 import com.poj.entity.problem.EProblemDifficulty;
 import com.poj.entity.problem.Problem;
 import com.poj.repository.problem.ProblemRepository;
-import com.poj.repository.problem.ProblemRepositoryQuerydsl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,10 +25,9 @@ import java.util.Optional;
 public class ProblemReadService {
 
     private final ProblemRepository problemRepository;
-    private final ProblemRepositoryQuerydsl problemRepositoryQuerydsl;
 
     public Problem findProblemByIdWithDetail(Long id){
-        Optional<Problem> problem = problemRepositoryQuerydsl.findByIdWithProblemDetail(id);
+        Optional<Problem> problem = problemRepository.findByIdWithProblemDetail(id);
         return problem.orElse(null);
     }
 
@@ -37,21 +37,21 @@ public class ProblemReadService {
     }
 
 
-    public Page<Problem> findProblemByTitle(String title, int pagenumber, int pagesize){
-        PageRequest pageRequest = PageRequest.of(pagenumber,pagesize);
+    public Page<ProblemResponse> findProblemByTitle(String title, ProblemReadRequest problemReadRequest){
+        PageRequest pageRequest = PageRequest.of(problemReadRequest.getPageNumber(), problemReadRequest.getSize());
         Page<Problem> problemPage = problemRepository.findAllByTitleContains(title, pageRequest);
-        return problemPage;
+        return problemPage.map(ProblemResponse::toDTO);
     }
 
-    public Page<Problem> findProblemByLanguage(EAvailableLanguage language, int pagenumber, int pagesize){
-        PageRequest pageRequest = PageRequest.of(pagenumber,pagesize);
+    public Page<ProblemResponse> findProblemByLanguage(EAvailableLanguage language, ProblemReadRequest problemReadRequest){
+        PageRequest pageRequest = PageRequest.of(problemReadRequest.getPageNumber(), problemReadRequest.getSize());
         Page<Problem> problemPage = problemRepository.findAllByAvailableLanguage(language, pageRequest);
-        return problemPage;
+        return problemPage.map(ProblemResponse::toDTO);
     }
 
-    public Page<Problem> findProblemByDifficulty(EProblemDifficulty difficulty, int pagenumber, int pagesize){
-        PageRequest pageRequest = PageRequest.of(pagenumber,pagesize);
+    public Page<ProblemResponse> findProblemByDifficulty(EProblemDifficulty difficulty, ProblemReadRequest problemReadRequest){
+        PageRequest pageRequest = PageRequest.of(problemReadRequest.getPageNumber(), problemReadRequest.getSize());
         Page<Problem> problemPage = problemRepository.findAllByDifficulty(difficulty, pageRequest);
-        return problemPage;
+        return problemPage.map(ProblemResponse::toDTO);
     }
 }
