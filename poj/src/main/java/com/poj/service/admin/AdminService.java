@@ -20,6 +20,6 @@ public class AdminService {
         Member member = memberRepository.findById(memberId).orElseThrow(
                 () -> new IllegalArgumentException("해당 회원이 존재하지 않습니다.")
         );
-        member.getAuthorities().add(authorityRepository.findByName(EAuthority.ROLE_USER));
+        member.getAuthorities().add(authorityRepository.findByEAuthority(EAuthority.ROLE_USER));
     }
 }
