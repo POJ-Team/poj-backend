@@ -19,8 +19,8 @@ public class ProblemUpdateService {
     private final ProblemRepository problemRepository;
 
     public void UpdateProblem(Long ID, ProblemCreateAndUpdateRequest problemCreateAndUpdateRequest){
-        if(problemRepository.findById(ID).isPresent()){
-            Problem problem = problemRepository.findById(ID).get();
+        if(problemRepository.findByIdWithProblemDetail(ID).isPresent()){
+            Problem problem = problemRepository.findByIdWithProblemDetail(ID).get();
             problem.update(problemCreateAndUpdateRequest);
             problemRepository.save(problem);
         }
