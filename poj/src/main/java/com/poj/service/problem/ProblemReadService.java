@@ -26,30 +26,30 @@ public class ProblemReadService {
 
     private final ProblemRepository problemRepository;
 
-    public Problem findProblemByIdWithDetail(Long id){
+    public Problem getProblemByIdWithDetail(Long id){
         Optional<Problem> problem = problemRepository.findByIdWithProblemDetail(id);
         return problem.orElse(null);
     }
 
-    public Problem findProblemById(Long id){
+    public Problem getProblemById(Long id){
         Optional<Problem> problem = problemRepository.findById(id);
         return problem.orElse(null);
     }
 
 
-    public Page<ProblemResponse> findProblemByTitle(String title, ProblemReadRequest problemReadRequest){
+    public Page<ProblemResponse> getProblemsByTitle(String title, ProblemReadRequest problemReadRequest){
         PageRequest pageRequest = PageRequest.of(problemReadRequest.getPageNumber(), problemReadRequest.getSize());
         Page<Problem> problemPage = problemRepository.findAllByTitleContains(title, pageRequest);
         return problemPage.map(ProblemResponse::toDTO);
     }
 
-    public Page<ProblemResponse> findProblemByLanguage(EAvailableLanguage language, ProblemReadRequest problemReadRequest){
+    public Page<ProblemResponse> getProblemsByLanguage(EAvailableLanguage language, ProblemReadRequest problemReadRequest){
         PageRequest pageRequest = PageRequest.of(problemReadRequest.getPageNumber(), problemReadRequest.getSize());
         Page<Problem> problemPage = problemRepository.findAllByAvailableLanguage(language, pageRequest);
         return problemPage.map(ProblemResponse::toDTO);
     }
 
-    public Page<ProblemResponse> findProblemByDifficulty(EProblemDifficulty difficulty, ProblemReadRequest problemReadRequest){
+    public Page<ProblemResponse> getProblemsByDifficulty(EProblemDifficulty difficulty, ProblemReadRequest problemReadRequest){
         PageRequest pageRequest = PageRequest.of(problemReadRequest.getPageNumber(), problemReadRequest.getSize());
         Page<Problem> problemPage = problemRepository.findAllByDifficulty(difficulty, pageRequest);
         return problemPage.map(ProblemResponse::toDTO);
