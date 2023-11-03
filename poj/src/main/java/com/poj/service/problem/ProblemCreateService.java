@@ -1,6 +1,6 @@
 package com.poj.service.problem;
 
-import com.poj.dto.problem.ProblemCreateRequest;
+import com.poj.dto.problem.ProblemCreateAndUpdateRequest;
 import com.poj.entity.problem.Problem;
 import com.poj.entity.problem.ProblemDetail;
 import com.poj.repository.problem.ProblemRepository;
@@ -18,20 +18,20 @@ import org.springframework.stereotype.Service;
 public class ProblemCreateService {
     private final ProblemRepository problemRepository;
 
-    public Long CreateProblem(ProblemCreateRequest problemCreateRequest){
+    public Long CreateProblem(ProblemCreateAndUpdateRequest problemCreateAndUpdateRequest){
         // Detail을 먼저 만들고 이후 Problem에 이를 지정하는 방식으로 생성합니다.
 
         ProblemDetail problemDetail = ProblemDetail.builder().
-                info(problemCreateRequest.getInfo()).
-                inputExample(problemCreateRequest.getInputExample()).
-                outputExample(problemCreateRequest.getOutputExample()).
-                timeLimit(problemCreateRequest.getTimeLimit()).
-                memoryLimit(problemCreateRequest.getMemoryLimit()).build();
+                info(problemCreateAndUpdateRequest.getInfo()).
+                inputExample(problemCreateAndUpdateRequest.getInputExample()).
+                outputExample(problemCreateAndUpdateRequest.getOutputExample()).
+                timeLimit(problemCreateAndUpdateRequest.getTimeLimit()).
+                memoryLimit(problemCreateAndUpdateRequest.getMemoryLimit()).build();
 
         Problem problem = Problem.builder().
-                title(problemCreateRequest.getTitle()).
-                difficulty(problemCreateRequest.getDifficulty()).
-                availableLanguage(problemCreateRequest.getAvailableLanguage()).
+                title(problemCreateAndUpdateRequest.getTitle()).
+                difficulty(problemCreateAndUpdateRequest.getDifficulty()).
+                availableLanguage(problemCreateAndUpdateRequest.getAvailableLanguage()).
                 problemDetail(problemDetail).build();
 
         problemRepository.save(problem);

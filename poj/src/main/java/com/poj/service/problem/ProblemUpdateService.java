@@ -1,6 +1,6 @@
 package com.poj.service.problem;
 
-import com.poj.dto.problem.ProblemCreateRequest;
+import com.poj.dto.problem.ProblemCreateAndUpdateRequest;
 import com.poj.entity.problem.Problem;
 import com.poj.repository.problem.ProblemRepository;
 import jakarta.transaction.Transactional;
@@ -18,10 +18,10 @@ import org.springframework.stereotype.Service;
 public class ProblemUpdateService {
     private final ProblemRepository problemRepository;
 
-    public void UpdateProblem(Long ID, ProblemCreateRequest problemCreateRequest){
+    public void UpdateProblem(Long ID, ProblemCreateAndUpdateRequest problemCreateAndUpdateRequest){
         if(problemRepository.findById(ID).isPresent()){
             Problem problem = problemRepository.findById(ID).get();
-            problem.update(problemCreateRequest);
+            problem.update(problemCreateAndUpdateRequest);
             problemRepository.save(problem);
         }
     }

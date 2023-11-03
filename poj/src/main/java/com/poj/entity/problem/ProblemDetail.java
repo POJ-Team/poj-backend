@@ -1,6 +1,6 @@
 package com.poj.entity.problem;
 
-import com.poj.dto.problem.ProblemCreateRequest;
+import com.poj.dto.problem.ProblemCreateAndUpdateRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -41,7 +41,7 @@ public class ProblemDetail {
         this.memoryLimit = memoryLimit;
     }
 
-    void update (ProblemCreateRequest request){
+    void update (ProblemCreateAndUpdateRequest request){
         this.info = request.getInfo();
         this.inputExample = request.getInputExample();
         this.outputExample = request.getOutputExample();

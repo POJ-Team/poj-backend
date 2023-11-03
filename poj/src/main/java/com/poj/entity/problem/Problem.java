@@ -1,6 +1,6 @@
 package com.poj.entity.problem;
 
-import com.poj.dto.problem.ProblemCreateRequest;
+import com.poj.dto.problem.ProblemCreateAndUpdateRequest;
 import com.poj.entity.BaseEntity;
 
 import jakarta.persistence.*;
@@ -53,12 +53,12 @@ public class Problem extends BaseEntity {
         this.problemDetail = problemDetail;
     }
 
-    public void update(ProblemCreateRequest problemCreateRequest){
-        this.title = problemCreateRequest.getTitle();
-        this.difficulty = problemCreateRequest.getDifficulty();
-        this.availableLanguage = problemCreateRequest.getAvailableLanguage();
+    public void update(ProblemCreateAndUpdateRequest problemCreateAndUpdateRequest){
+        this.title = problemCreateAndUpdateRequest.getTitle();
+        this.difficulty = problemCreateAndUpdateRequest.getDifficulty();
+        this.availableLanguage = problemCreateAndUpdateRequest.getAvailableLanguage();
 
-        this.problemDetail.update(problemCreateRequest);
+        this.problemDetail.update(problemCreateAndUpdateRequest);
     }
 
     public void addSubmitNum(){
