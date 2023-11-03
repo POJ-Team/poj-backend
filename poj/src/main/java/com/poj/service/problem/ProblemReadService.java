@@ -2,6 +2,7 @@ package com.poj.service.problem;
 
 import com.poj.dto.problem.ProblemReadRequest;
 import com.poj.dto.problem.ProblemResponse;
+import com.poj.dto.problem.ProblemWithDetailResponse;
 import com.poj.entity.problem.EAvailableLanguage;
 import com.poj.entity.problem.EProblemDifficulty;
 import com.poj.entity.problem.Problem;
@@ -26,14 +27,14 @@ public class ProblemReadService {
 
     private final ProblemRepository problemRepository;
 
-    public Problem getProblemByIdWithDetail(Long id){
+    public ProblemWithDetailResponse getProblemByIdWithDetail(Long id){
         Optional<Problem> problem = problemRepository.findByIdWithProblemDetail(id);
-        return problem.orElse(null);
+        return ProblemWithDetailResponse.toDTO(problem.get());
     }
 
-    public Problem getProblemById(Long id){
+    public ProblemResponse getProblemById(Long id){
         Optional<Problem> problem = problemRepository.findById(id);
-        return problem.orElse(null);
+        return ProblemResponse.toDTO(problem.get());
     }
 
 
