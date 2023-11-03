@@ -13,7 +13,7 @@ import java.util.Set;
  * 문제를 생성할 때 사용하는 Request입니다.
  */
 @Data
-public class ProblemCreateRequest {
+public class ProblemCreateAndUpdateRequest {
 
     @NotBlank
     private String title; // 제목
