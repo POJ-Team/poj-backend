@@ -1,5 +1,6 @@
 package com.poj.entity.problem;
 
+import com.poj.dto.problem.ProblemCreateAndUpdateRequest;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -23,22 +24,13 @@ public class ProblemDetail {
 
     @NotBlank
     @Column(unique = true)
-    private String info; // 문제 설명
+    private String info = ""; // 문제 설명
 
-    private String inputExample; // input 예시
-    private String outputExample; // output 예시
+    private String inputExample = ""; // input 예시
+    private String outputExample = ""; // output 예시
 
-    private Long timeLimit; // 시간 제한(default = Long.MAX_VALUE)
-    private Long memoryLimit; // 메모리 제한. 단위 = mb(default = 256mb)
-
-    @Builder
-    public ProblemDetail(String info, String inputExample, String outputExample) {
-        this.info = info;
-        this.inputExample = inputExample;
-        this.outputExample = outputExample;
-        this.timeLimit = Long.MAX_VALUE;
-        this.memoryLimit = 256L;;
-    }
+    private Long timeLimit = Long.MAX_VALUE; // 시간 제한(default = Long.MAX_VALUE)
+    private Long memoryLimit = 256L; // 메모리 제한. 단위 = mb(default = 256mb)
 
     @Builder
     public ProblemDetail(String info, String inputExample, String outputExample, Long timeLimit, Long memoryLimit) {
@@ -47,6 +39,14 @@ public class ProblemDetail {
         this.outputExample = outputExample;
         this.timeLimit = timeLimit;
         this.memoryLimit = memoryLimit;
+    }
+
+    void update (ProblemCreateAndUpdateRequest request){
+        this.info = request.getInfo();
+        this.inputExample = request.getInputExample();
+        this.outputExample = request.getOutputExample();
+        this.timeLimit = request.getTimeLimit();
+        this.memoryLimit = request.getMemoryLimit();
     }
 
 }
