@@ -1,95 +1,90 @@
 package com.poj.entity.problem;
 
-import com.poj.repository.problem.ProblemRepository;
-import jakarta.persistence.EntityManager;
-import org.hibernate.Hibernate;
-import org.hibernate.LazyInitializationException;
+import com.poj.dto.problem.ProblemCreateAndUpdateRequest;
+import com.poj.dto.problem.ProblemReadRequest;
+import com.poj.dto.problem.ProblemResponse;
+import com.poj.service.problem.ProblemCreateService;
+import com.poj.service.problem.ProblemReadService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.*;
 
 @SpringBootTest
-@Transactional
-class ProblemTest {
-    @Autowired
-    private ProblemRepository problemRepository;
+public class ProblemTest {
 
     @Autowired
-    EntityManager em;
+    private ProblemReadService problemReadService;
 
+    @Autowired
+    private ProblemCreateService problemCreateService;
+
+    // @Test에 Transactional이 걸려 있으면 DB에 반영되지 않고 롤백됩니다.
+    // DB에 들어가는것을 확인하려면 @Transactional을 지우고 실행해주세요.
+    @Transactional
     @Test
-    void create() {
-        Problem problem = Problem.builder()
-                .title("test")
-                .difficulty(EProblemDifficulty.DIFFICULTY_EASY)
-                .availableLanguage(Set.of(EAvailableLanguage.LANGUAGE_C, EAvailableLanguage.LANGUAGE_JAVA))
-                .build();
-        problemRepository.save(problem);
+    void createAndFind(){
+        // 생성할 문제 개수
+        int NUM = 500;
 
-        // 영속성 컨텍스트 초기화
-        em.flush();
-        em.clear();
+        // 문제를 500개 생성
+        createProblem(NUM);
 
-        Problem findProblem = problemRepository.findById(problem.getId()).get();
-        assertEquals(problem.getTitle(), findProblem.getTitle());
-        assertEquals(problem.getDifficulty(), findProblem.getDifficulty());
-        assertEquals(problem.getAvailableLanguage(), findProblem.getAvailableLanguage());
+        // Read Request 생성. 0번째 페이지. 표시되는 개수는 20개
+        int PAGENUM = 0;
+        int SIZE = 10;
+        ProblemReadRequest problemReadRequest = new ProblemReadRequest();
+        problemReadRequest.setPageNumber(PAGENUM);
+        problemReadRequest.setSize(SIZE);
+
+        // request 보냄
+//        Page<ProblemResponse> pp = problemReadService.getProblemsByTitle("25", problemReadRequest);// title에 25가 포함된 문제
+        Page<ProblemResponse> pp = problemReadService.getProblemsByDifficulty(EProblemDifficulty.DIFFICULTY_NORMAL, problemReadRequest);// 난이도가 Normal인 문제
+
+
+        // 잘 받았는지 출력해봄
+        System.out.println(pp.stream().count());
+        pp.stream().forEach(problemResponse -> System.out.println(
+                String.format(
+                        problemResponse.getTitle() +
+                                "의 난이도는 " +
+                                problemResponse.getDifficulty() +
+                                "입니다."
+                )));
+
+
     }
 
-    @Test
-    void create_with_ProblemDetail() {
-        ProblemDetail problemDetail = ProblemDetail.builder()
-                .info("test")
-                .inputExample("test")
-                .outputExample("test")
-                .build();
-        Problem problem = Problem.builder()
-                .title("test")
-                .difficulty(EProblemDifficulty.DIFFICULTY_EASY)
-                .availableLanguage(Set.of(EAvailableLanguage.LANGUAGE_C, EAvailableLanguage.LANGUAGE_JAVA))
-                .problemDetail(problemDetail)
-                .build();
-        problemRepository.save(problem);
 
-        // 영속성 컨텍스트 초기화
-        em.flush();
-        em.clear();
+    private void createProblem(int NUM){
+        // 문제마다 property 지정해주고 생성
 
-        Problem findProblem = problemRepository.findByIdWithProblemDetail(problem.getId()).get();
-        assertEquals(problem.getTitle(), findProblem.getTitle());
-        assertEquals(problem.getDifficulty(), findProblem.getDifficulty());
-        assertEquals(problem.getAvailableLanguage(), findProblem.getAvailableLanguage());
-        assertEquals(problem.getProblemDetail().getInfo(), findProblem.getProblemDetail().getInfo());
-        assertEquals(problem.getProblemDetail().getInputExample(), findProblem.getProblemDetail().getInputExample());
-        assertEquals(problem.getProblemDetail().getOutputExample(), findProblem.getProblemDetail().getOutputExample());
+        Random random = new Random();
+        EProblemDifficulty[] enums_diff = EProblemDifficulty.values();
 
-        // fetch lazy 전략으로 인해 프록시 객체만 들고 있는지 확인
-        em.flush();
-        em.clear();
+        for(int i=0; i<NUM; i++){
+            ProblemCreateAndUpdateRequest problemCreateAndUpdateRequest = new ProblemCreateAndUpdateRequest();
+            problemCreateAndUpdateRequest.setTitle(i + "번째 문제");
+            problemCreateAndUpdateRequest.setDifficulty(enums_diff[random.nextInt(enums_diff.length)]);
+            Set<EAvailableLanguage> setset = new HashSet<>();
+            if(i%2 == 0) setset.add(EAvailableLanguage.LANGUAGE_JAVA);
+            if(i%2 != 0) setset.add(EAvailableLanguage.LANGUAGE_CPP);
+            if(i%7 == 0) setset.add(EAvailableLanguage.LANGUAGE_C);
+            if(i%23 == 0) setset.add(EAvailableLanguage.LANGUAGE_PYTHON);
+            problemCreateAndUpdateRequest.setAvailableLanguage(setset);
 
-        Problem findProblem2 = problemRepository.findById(problem.getId()).get();
-        assertEquals(problem.getTitle(), findProblem2.getTitle());
-        assertEquals(problem.getDifficulty(), findProblem2.getDifficulty());
-        assertEquals(problem.getAvailableLanguage(), findProblem2.getAvailableLanguage());
+            problemCreateAndUpdateRequest.setInfo(i + "번째 문제의 설명입니다");
+            problemCreateAndUpdateRequest.setInputExample("");
+            problemCreateAndUpdateRequest.setOutputExample("");
+            problemCreateAndUpdateRequest.setTimeLimit(0L);
+            problemCreateAndUpdateRequest.setMemoryLimit(0L);
 
-        boolean initialized = Hibernate.isInitialized(findProblem2.getProblemDetail());
-        assertFalse(initialized);
+            problemCreateService.CreateProblem(problemCreateAndUpdateRequest);
+        }
 
-        // 실제로 LazyInitializationException 이 발생하는지 확인
-        // LazyInitializationException 은 프록시 객체가 영속성 컨텍스트가 종료된 후 참조하려고 할 때 발생합니다.
-
-        // 영속성 컨텍스트 초기화
-        em.flush();
-        em.clear();
-
-        assertThrows(LazyInitializationException.class, () -> {
-            findProblem2.getProblemDetail().getInfo();
-        });
     }
 }
