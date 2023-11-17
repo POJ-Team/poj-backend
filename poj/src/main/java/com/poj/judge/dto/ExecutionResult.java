@@ -5,11 +5,14 @@ import lombok.Data;
 @Data
 public class ExecutionResult {
     String error;
-    int executionTime;
+    double executionTime;
     int memoryUsage;
     String output;
 
-    public ExecutionResult(String error, int executionTime, int memoryUsage, String output) {
+    public ExecutionResult() {
+    }
+
+    public ExecutionResult(String error, double executionTime, int memoryUsage, String output) {
         this.error = error;
         this.executionTime = executionTime;
         this.memoryUsage = memoryUsage;
