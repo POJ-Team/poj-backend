@@ -21,8 +21,8 @@ args = parser.parse_args()
 
 result = {
     "error": None,
-    "execution_time": None,  # (MS)
-    "memory_usage": None,  # (KB)
+    "executionTime": None,  # (MS)
+    "memoryUsage": None,  # (KB)
     "output": None,
 }
 

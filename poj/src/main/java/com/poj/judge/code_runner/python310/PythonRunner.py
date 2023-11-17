@@ -20,8 +20,8 @@ args = parser.parse_args()
 
 result = {
     "error": None,
-    "execution_time": None,  # (MS)
-    "memory_usage": None,  # (KB)
+    "executionTime": None,  # (MS)
+    "memoryUsage": None,  # (KB)
     "output": None,
 }
 
@@ -57,7 +57,7 @@ if memory_usage > args.memory:
     create_result()
     exit(0)
 
-result['execution_time'] = execution_time
-result['memory_usage'] = memory_usage
+result['executionTime'] = execution_time
+result['memoryUsage'] = memory_usage
 result['output'] = execution.stdout.decode('utf-8')
 create_result()
