@@ -9,8 +9,8 @@ import java.util.List;
 public class JudgeRequest {
     private String sourceCode;
     private Language language;
-    private Integer limitTimeSeconds;
-    private Integer limitMemoryMegaBytes;
+    private Integer limitTimeInMS;
+    private Integer limitMemoryInKB;
     private List<TestCase> testCases;
 
     @Data
@@ -24,11 +24,11 @@ public class JudgeRequest {
         }
     }
 
-    public JudgeRequest(String sourceCode, Language language, Integer limitTimeSeconds, Integer limitMemoryMegaBytes, List<TestCase> testCases) {
+    public JudgeRequest(String sourceCode, Language language, Integer limitTimeInMS, Integer limitMemoryInKB, List<TestCase> testCases) {
         this.sourceCode = sourceCode;
         this.language = language;
-        this.limitTimeSeconds = limitTimeSeconds;
-        this.limitMemoryMegaBytes = limitMemoryMegaBytes;
+        this.limitTimeInMS = limitTimeInMS;
+        this.limitMemoryInKB = limitMemoryInKB;
         this.testCases = testCases;
     }
 }
