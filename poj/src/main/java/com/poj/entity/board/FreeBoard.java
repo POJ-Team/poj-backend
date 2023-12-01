@@ -1,5 +1,6 @@
 package com.poj.entity.board;
 
+import com.poj.dto.board.FreeBoardRequestDTO;
 import com.poj.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ public class FreeBoard extends BaseEntity {
     private String title;
 
     @NotBlank
-    private String context;//글의 내용
+    private String content;//글의 내용
 
     private int viewCount;
 
@@ -29,11 +30,24 @@ public class FreeBoard extends BaseEntity {
     private String author;//author
 
     @Builder
-    public FreeBoard(String title, String context, String author){
+    public FreeBoard(String title, String content, String author){
         this.title = title;
-        this.context = context;
+        this.content = content;
         this.author = author;
         this.viewCount = 0;
+    }
+
+    public FreeBoard(FreeBoardRequestDTO freeBoardRequestDTO){
+        this.title = freeBoardRequestDTO.getTitle();
+        this.content = freeBoardRequestDTO.getContent();
+        this.author = freeBoardRequestDTO.getAuthor();
+        this.viewCount = 0;
+    }
+
+    public void update(FreeBoardRequestDTO freeBoardRequestDTO){
+        this.title = freeBoardRequestDTO.getTitle();
+        this.content = freeBoardRequestDTO.getContent();
+        this.author = freeBoardRequestDTO.getAuthor();
     }
 
     public void upViewCount(){
