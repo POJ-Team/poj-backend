@@ -3,7 +3,6 @@ package com.poj.controller.board;
 import com.poj.dto.board.FreeBoardListResponseDTO;
 import com.poj.dto.board.FreeBoardRequestDTO;
 import com.poj.dto.board.FreeBoardResponseDTO;
-import com.poj.entity.board.FreeBoard;
 import com.poj.service.board.FreeBoardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

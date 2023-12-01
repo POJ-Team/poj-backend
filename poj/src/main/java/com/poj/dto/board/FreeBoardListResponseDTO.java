@@ -18,12 +18,14 @@ public class FreeBoardListResponseDTO {
     private LocalDateTime updatedAt;
     public FreeBoardListResponseDTO(FreeBoard freeBoard){
         this.title = freeBoard.getTitle();
+        this.author = freeBoard.getAuthor();
         this.createdAt = freeBoard.getCreatedAt();
         this.updatedAt = freeBoard.getUpdatedAt();
     }
 
     public FreeBoardListResponseDTO (Optional<FreeBoard> freeBoardOptional){
         this.title = freeBoardOptional.get().getTitle();
+        this.author = freeBoardOptional.get().getAuthor();
         this.createdAt = freeBoardOptional.get().getCreatedAt();
         this.updatedAt = freeBoardOptional.get().getUpdatedAt();
     }
