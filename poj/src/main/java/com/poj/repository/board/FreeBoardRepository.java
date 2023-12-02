@@ -1,6 +1,6 @@
 package com.poj.repository.board;
 
-import com.poj.dto.board.FreeBoardListResponseDTO;
+import com.poj.dto.board.freeboardDTO.FreeBoardListResponseDTO;
 import com.poj.entity.board.FreeBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,6 +1,6 @@
 package com.poj.entity.board;
 
-import com.poj.dto.board.FreeBoardRequestDTO;
+import com.poj.dto.board.freeboardDTO.FreeBoardRequestDTO;
 import com.poj.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

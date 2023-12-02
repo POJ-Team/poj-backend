@@ -1,4 +1,4 @@
-package com.poj.dto.board;
+package com.poj.dto.board.freeboardDTO;
 
 import com.poj.entity.board.FreeBoard;
 import lombok.Getter;
