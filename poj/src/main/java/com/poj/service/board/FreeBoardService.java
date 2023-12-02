@@ -1,9 +1,9 @@
 package com.poj.service.board;
 
 import java.util.*;
-import com.poj.dto.board.FreeBoardListResponseDTO;
-import com.poj.dto.board.FreeBoardRequestDTO;
-import com.poj.dto.board.FreeBoardResponseDTO;
+import com.poj.dto.board.freeboardDTO.FreeBoardListResponseDTO;
+import com.poj.dto.board.freeboardDTO.FreeBoardRequestDTO;
+import com.poj.dto.board.freeboardDTO.FreeBoardResponseDTO;
 import com.poj.entity.board.FreeBoard;
 import com.poj.exception.board.BoardServiceException;
 import com.poj.repository.board.FreeBoardRepository;
